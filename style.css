@@ -1,0 +1,389 @@
+/* Author: Ecem Gokdogan, Modified for responsiveness and performance by ChatGPT */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  position: relative;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: radial-gradient(circle at top left, #950923 10%, #111113 30%);
+}
+
+/* Background Optimization */
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(10px) brightness(0.5);
+  transform: scale(1.05);
+}
+
+/* Particles */
+.particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 16px;
+  margin: 0 auto;
+}
+
+/* Swiper Styles */
+.swiper {
+  width: 100%;
+  padding: 50px 0;
+}
+
+.swiper-slide {
+  position: relative;
+  width: 200px;
+  height: 500px;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: 1s;
+  user-select: none;
+}
+
+.swiper-slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(130, 13, 13, 0.8), rgba(39, 8, 92, 0.8));
+  mix-blend-mode: multiply;
+  z-index: 1;
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  transition: 1s;
+}
+
+.swiper-slide p {
+  position: absolute;
+  left: 20px;
+  bottom: 10px;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 2px;
+  z-index: 2;
+  opacity: 0;
+  transform: rotate(360deg) scale(0);
+  transition: 0.8s;
+}
+
+.swiper-slide-active {
+  width: 350px;
+  transition: 1s;
+}
+
+.swiper-slide-active::after {
+  background: rgba(123, 123, 123, 0.4);
+}
+
+.swiper-slide-active img {
+  transform: scale(1.3);
+  object-position: 50% 0%;
+}
+
+.swiper-slide-active p {
+  transform: rotate(0deg) scale(1);
+  opacity: 1;
+}
+
+/* Swiper Pagination */
+.swiper-pagination-bullet {
+  width: 16px;
+  height: 16px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: all 0.6s ease-in-out;
+}
+
+.swiper-pagination-bullet-active {
+  width: 32px;
+  background-color: #6f1223;
+  border-radius: 14px;
+}
+
+/* Music Button */
+#play-pause-button {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: #6f1223;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease-in-out;
+}
+
+#play-pause-button:hover {
+  transform: scale(1.1);
+}
+
+#play-pause-button:active {
+  transform: scale(0.95);
+}
+
+.audio-icon {
+  font-size: 28px;
+  color: #fff;
+}
+
+.hidden {
+  display: none;
+}
+
+/* PDF Viewer */
+.pdf-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 50%;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+  
+}
+
+
+#page-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 10px;
+  background: #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+#page-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #4e73df;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#page-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #4e73df;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+/* Responsive Enhancements */
+@media (max-width: 1024px) {
+  .container {
+    width: 95%;
+  }
+
+  .swiper-slide {
+    width: 180px;
+    height: 400px;
+  }
+
+  .swiper-slide-active {
+    width: 280px;
+  }
+
+  .swiper-slide img {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .swiper {
+    padding: 30px 0;
+  }
+
+  .swiper-slide {
+    width: 160px;
+    height: 350px;
+  }
+
+  .swiper-slide-active {
+    width: 240px;
+  }
+
+  .swiper-slide img {
+    height: 350px;
+  }
+
+  
+
+  #play-pause-button {
+    bottom: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .audio-icon {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .swiper-slide {
+    width: 130px;
+    height: 280px;
+  }
+
+  .swiper-slide-active {
+    width: 190px;
+  }
+
+  .swiper-slide p {
+    font-size: 1rem;
+    left: 8px;
+    bottom: 8px;
+  }
+
+  #play-pause-button {
+    bottom: 12px;
+    left: 12px;
+    width: 42px;
+    height: 42px;
+  }
+
+  .audio-icon {
+    font-size: 18px;
+  }
+
+  
+}
+/* Container */
+.pdf-container {
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+  width: 100%;
+}
+
+#pdf-canvas {
+  width: 100%;
+  max-height: 90vh;
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+
+.pdf-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pdf-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.pdf-buttons button {
+  padding: 4px 12px;
+  background: #950923;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.pdf-buttons button:hover {
+  background: #b31735;
+}
+
+#page-slider {
+  flex: 1;
+  height: 6px;
+  background: #ddd;
+  border-radius: 4px;
+  appearance: none;
+  cursor: pointer;
+}
+
+#page-slider::-webkit-slider-thumb {
+  appearance: none;
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  background: #950923;
+  border: none;
+}
+
+#page-slider::-moz-range-thumb {
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  background: #950923;
+  border: none;
+}
+
+#page-num-display {
+  font-size: 12px;
+  color: #333;
+  white-space: nowrap;
+}
